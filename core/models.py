@@ -10,6 +10,10 @@ class Researcher(AbstractUser):
         return self.username
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=255)
+
+
 class Architecture(models.Model):
     name = models.CharField(max_length=255, verbose_name="Name")
     description = models.TextField(max_length=255, verbose_name="Description")
@@ -21,9 +25,11 @@ class Architecture(models.Model):
 
 class TrainModel(models.Model):
     name = models.CharField(max_length=255)
-    version = models.FloatField()
+    version = models.CharField(max_length=255)
     architecture = models.ForeignKey(Architecture, on_delete=models.CASCADE)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag)
+
     def __str__(self):
         return self.name
 
@@ -35,3 +41,5 @@ class PerformanceMetric(models.Model):
 
     def __str__(self):
         return f"Name {self.trained_model}. Accuracy: {self.accuracy_score}."
+
+

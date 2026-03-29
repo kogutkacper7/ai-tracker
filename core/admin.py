@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Researcher, Architecture, TrainModel, PerformanceMetric
+from .models import Researcher, Architecture, TrainModel, PerformanceMetric, Tag
 
 
 class ResearcherAdmin(UserAdmin):
@@ -13,3 +13,4 @@ admin.site.register(Researcher, ResearcherAdmin)
 admin.site.register(Architecture)
 admin.site.register(TrainModel)
 admin.site.register(PerformanceMetric)
+admin.site.register(Tag)
