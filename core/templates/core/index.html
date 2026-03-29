@@ -7,9 +7,15 @@
 <body>
   <h1>Main Page</h1>
   <nav>
-    <a href="{% url 'core:researcher-list' %}">Researchers</a>
+    <ul>
+      <li><a href="{% url 'core:researcher-list' %}">Researchers</a></li>
+      <li><a href="{% url 'core:train_model-list' %}">Train Models List</a></li>
+    </ul>
   </nav>
-  {% block content %}
-  {% endblock %}
+  <div class="container mt-4">
+    {% block content %}
+    {% endblock %}
+  </div>
+
 </body>
 </html>

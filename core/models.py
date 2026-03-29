@@ -13,6 +13,8 @@ class Researcher(AbstractUser):
 class Tag(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
 
 class Architecture(models.Model):
     name = models.CharField(max_length=255, verbose_name="Name")
@@ -27,14 +29,14 @@ class TrainModel(models.Model):
     name = models.CharField(max_length=255)
     version = models.CharField(max_length=255)
     architecture = models.ForeignKey(Architecture, on_delete=models.CASCADE)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="train_models")
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.name
 
 class PerformanceMetric(models.Model):
-    trained_model = models.ForeignKey(TrainModel, on_delete=models.CASCADE)
+    trained_model = models.ForeignKey(TrainModel, on_delete=models.CASCADE, related_name="performance_metrics")
     accuracy_score = models.FloatField()
     loss_value = models.FloatField()
     test_date = models.DateTimeField(auto_now_add=True)

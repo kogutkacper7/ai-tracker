@@ -1,0 +1,38 @@
+{% extends "core/index.html" %}
+
+{% block content %}
+  <h1>Train model: {{train_model.name}}</h1>
+  <ul>
+    <li>Version: {{ train_model.version }}</li>
+    <li>Architecture: <a href="{% url 'core:archtecture-detail' train_model.architecture.pk%}">{{ train_model.architecture }}</a></li>
+    <li>Author: <a href="{% url 'core:researcher-detail' train_model.author.pk %}">{{ train_model.author.username }}</a></li>
+    <li>Tags:
+      <ul>
+        {% for tag in train_model.tags.all %}
+          <li>{{tag.name}}</li>
+        {% empty %}
+          <li>No assigned tags.</li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+  <h2>Test results</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Date test</th>
+        <th>Accuracy score</th>
+        <th>Loss Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for metric in train_model.performance_metrics.all %}
+        <tr>
+          <td>{{ metric.accuracy_score }}</td>
+          <td>{{ metric.accuracy_score }}</td>
+          <td>{{ metric.loss_value }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

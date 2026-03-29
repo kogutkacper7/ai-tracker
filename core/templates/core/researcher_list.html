@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Researchers</title>
-</head>
-<body>
-  {% extends 'core/index.html' %}
+{% extends 'core/index.html' %}
 
-  {% block content %}
-    <h1>Researchers List</h1>
-      <ul>
-        {% for researcher in researchers %}
-          <li>{{ researcher.specialization }}</li>
-        {% endfor %}
-      </ul>
-  {% endblock %}
-</body>
-</html>
+{% block content %}
+  <h1>Researchers List</h1>
+    <ul>
+      {% for researcher in researchers %}
+        <li><a href="{% url 'core:researcher-detail' researcher.pk %}">{{ researcher.username}}</a></li>
+      {% endfor %}
+    </ul>
+{% endblock %}

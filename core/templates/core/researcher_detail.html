@@ -1,0 +1,13 @@
+{% extends "core/index.html" %}
+
+{% block content %}
+  <h1>Researcher: {{researcher.username}}</h1>
+  <h2>Train models:</h2>
+  <ul>
+    {% for train_model in researcher.train_models.all %}
+      <li><a href="{% url 'core:train-model-detail' train_model.pk %}">{{ train_model.name }}</a></li>
+    {% empty %}
+      <li>This researcher did not add any models yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

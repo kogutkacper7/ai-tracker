@@ -1,0 +1,8 @@
+{% extends 'core/index.html' %}
+
+{% block content %}
+  <h1>Architecture: {{architecture.name}}</h1>
+  <h2>Description:</h2>
+  <p>{{architecture.description}}</p>
+  <p>Created at: {{ architecture.created_at }}</p>
+{% endblock %}

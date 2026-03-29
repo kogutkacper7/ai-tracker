@@ -1,0 +1,10 @@
+{% extends 'core/index.html' %}
+
+{% block content %}
+  <h1>Train Models</h1>
+  <ul>
+    {% for train_model in train_models %}
+      <li><a href="{% url 'core:train-model-detail' train_model.pk%}">{{train_model}}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

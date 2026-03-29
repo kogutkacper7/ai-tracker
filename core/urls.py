@@ -1,9 +1,13 @@
 from django.urls import path
-from .views import ResearcherListView, index_view
+from .views import ResearcherListView, index_view, TrainModelListView, TrainModelDetailView, ResearcherDetailView, ArchitectureDetailView
 
 app_name = "core"
 
 urlpatterns = [
     path("", index_view, name="index"),
-    path("researcher-list/", ResearcherListView.as_view(), name="researcher-list")
+    path("researcher-list/", ResearcherListView.as_view(), name="researcher-list"),
+    path("train_model-list/", TrainModelListView.as_view(), name="train_model-list"),
+    path("train_model-detail/<int:pk>/", TrainModelDetailView.as_view(), name="train-model-detail"),
+    path("user-detail/<int:pk>", ResearcherDetailView.as_view(), name="researcher-detail"),
+    path("archtecture-detail/<int:pk>", ArchitectureDetailView.as_view(), name="archtecture-detail")
 ]
