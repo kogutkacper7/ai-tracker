@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 
-from django.conf.global_settings import AUTH_USER_MODEL
+from django.conf.global_settings import AUTH_USER_MODEL, LOGIN_REDIRECT_URL
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -121,3 +121,6 @@ STATIC_URL = 'static/'
 
 
 AUTH_USER_MODEL = 'core.Researcher'
+
+LOGOUT_REDIRECT_URL = "core:login"
+LOGIN_REDIRECT_URL = "core:index"
