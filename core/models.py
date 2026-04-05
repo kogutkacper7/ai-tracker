@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse, reverse_lazy
 
 
 class Researcher(AbstractUser):
@@ -35,6 +36,9 @@ class TrainModel(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("core:train-model-detail", kwargs={"pk": self.pk})
+
 class PerformanceMetric(models.Model):
     trained_model = models.ForeignKey(TrainModel, on_delete=models.CASCADE, related_name="performance_metrics")
     accuracy_score = models.FloatField()
@@ -44,4 +48,5 @@ class PerformanceMetric(models.Model):
     def __str__(self):
         return f"Name {self.trained_model}. Accuracy: {self.accuracy_score}."
 
-
+    def get_absolute_url(self):
+        return reverse("core:train-model-detail", kwargs={"pk":self.trained_model.pk})
