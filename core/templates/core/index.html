@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>AI Tracker</title>
-</head>
-<body>
-  <h1>Main Page</h1>
-  <nav>
-    <ul>
-      <li><a href="{% url 'core:researcher-list' %}">Researchers</a></li>
-      <li><a href="{% url 'core:train_model-list' %}">Train Models List</a></li>
-    </ul>
-  </nav>
-  <div class="container mt-4">
-    {% block content %}
-    {% endblock %}
-  </div>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+  <h1>Main Page</h1>
+  <h2>Researchers: {{ total_researchers }}</h2>
+  <h2>Tags: {{ tags }}</h2>
+  <h2>Architectures: {{ architectures }}</h2>
+  <h2>Train models: {{ train_models }}</h2>
+  <h2>Metrics: {{ performance_metric }}</h2>
+{% endblock %}

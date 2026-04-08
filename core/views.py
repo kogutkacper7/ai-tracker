@@ -1,13 +1,26 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from .models import Researcher, TrainModel, Architecture, PerformanceMetric
-from .forms import PerformanceMetricForm, ContactUsForm
+from .models import Researcher, TrainModel, Architecture, PerformanceMetric, Tag
+from .forms import PerformanceMetricForm, ContactUsForm, ResearcherCreationForm
 
 
 def index_view(request):
-    return render(request, "core/index.html")
+    researchers = Researcher.objects.all().count()
+    tags = Tag.objects.all().count()
+    architectures = Architecture.objects.all().count()
+    train_models = TrainModel.objects.all().count()
+    performance_metric = PerformanceMetric.objects.all().count()
+    context = {
+        "total_researchers": researchers,
+        "tags": tags,
+        "architectures": architectures,
+        "train_models": train_models,
+        "performance_metric": performance_metric
+               }
+    return render(request, "core/index.html", context)
 
 class ResearcherListView(ListView):
     model = Researcher
@@ -19,9 +32,10 @@ class TrainModelListView(ListView):
     model = TrainModel
     template_name = 'core/train_model_list.html'
     context_object_name = 'train_models'
+    paginate_by = 2
 
 
-class TrainModelCreate(CreateView):
+class TrainModelCreate(LoginRequiredMixin, CreateView):
     model = TrainModel
     template_name = 'core/train_model_create.html'
     fields = ["name", "version", "architecture", "author", "tags"]
@@ -61,12 +75,12 @@ class TrainModelDetailView(DetailView):
         return self.render_to_response(context)
 
 
-class TrainModelDelete(DeleteView):
+class TrainModelDelete(LoginRequiredMixin, DeleteView):
     model = TrainModel
     success_url = reverse_lazy("core:train_model-list")
 
 
-class TrainModelUpdate(UpdateView):
+class TrainModelUpdate(LoginRequiredMixin, UpdateView):
     model = TrainModel
     template_name = "core/train_model_update.html"
     fields = ["name", "version"]
@@ -89,17 +103,6 @@ class ArchitectureDetailView(DetailView):
     template_name = "core/architecture_detail.html"
     context_object_name = "architecture"
 
-def add_performance_metric(request):
-    if request.method == "POST":
-        form = PerformanceMetricForm(request.POST)
-
-        if form.is_valid():
-            new_metric = form.save()
-            return redirect("core:train-model-detail", pk=new_metric.trained_model.pk)
-    else:
-        form = PerformanceMetricForm()
-
-    return render(request, "core/add_metric.html", {"form": form})
 
 
 def contact_view(request):
@@ -125,16 +128,23 @@ def contact_view(request):
     return render(request, "core/contact.html", context)
 
 
-class PerformanceMetricUpdate(UpdateView):
+class PerformanceMetricUpdate(LoginRequiredMixin, UpdateView):
     model = PerformanceMetric
     fields = "__all__"
     template_name = "core/metric_update.html"
     context_object_name = "metric"
 
 
-class PerformanceMetricDelete(DeleteView):
+class PerformanceMetricDelete(LoginRequiredMixin, DeleteView):
     model = PerformanceMetric
 
     def get_success_url(self):
         pk = self.object.trained_model.pk
         return reverse_lazy('core:train-model-detail', kwargs={"pk":pk})
+
+
+class RegisterUser(CreateView):
+    model = Researcher
+    form_class = ResearcherCreationForm
+    template_name = "registration/register.html"
+    success_url = reverse_lazy('core:login')
