@@ -1,10 +1,21 @@
-{% extends 'core/index.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
   <h1>Train Models</h1>
+
+  <form action="" method="get">
+    {% csrf_token %}
+    <input type="text" value="{{search_value}}" placeholder="Search for train model" name="search">
+    <button type="submit">Search</button>
+  </form>
+
+
   <ul>
     {% for train_model in train_models %}
       <li><a href="{% url 'core:train-model-detail' train_model.pk%}">{{train_model}}</a></li>
     {% endfor %}
   </ul>
+
+    <a href="{% url 'core:train_model-create' %}">Add Train Model</a>
+
 {% endblock %}

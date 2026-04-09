@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'core/index.html' %}
+
+{% block content %}
+  <h1>Architectures list:</h1>
+  <form action="" method="get">
+    {% csrf_token %}
+    <input type="text" name="search" value='{{search_value}}' placeholder="Search for architectures">
+    <button type="submit">Search</button>
+  <ul>
+    {% for architecture in architectures %}
+      <li><a href="{% url 'core:archtecture-detail' architecture.pk %}">{{ architecture.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

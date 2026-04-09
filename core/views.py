@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
+from django.template.context_processors import request
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
@@ -13,12 +14,20 @@ def index_view(request):
     architectures = Architecture.objects.all().count()
     train_models = TrainModel.objects.all().count()
     performance_metric = PerformanceMetric.objects.all().count()
+
+    last_added_models = TrainModel.objects.order_by("-id")[:3]
+
+    num_visits = request.session.get("num_visits", 0)
+    request.session["num_visits"] = num_visits + 1
+
     context = {
         "total_researchers": researchers,
         "tags": tags,
         "architectures": architectures,
         "train_models": train_models,
-        "performance_metric": performance_metric
+        "performance_metric": performance_metric,
+        "num_visits": num_visits + 1,
+        "last_added_models": last_added_models
                }
     return render(request, "core/index.html", context)
 
@@ -27,6 +36,25 @@ class ResearcherListView(ListView):
     template_name = 'core/researcher_list.html'
     context_object_name = "researchers"
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        search_value = self.request.GET.get("search")
+
+        if search_value:
+            queryset = queryset.filter(username__icontains=search_value)
+            return queryset
+
+        return queryset
+
+    def get_context_data(
+        self, *, object_list = ..., **kwargs
+    ):
+        context = super().get_context_data(**kwargs)
+
+        context["search_value"] = self.request.GET.get('search', '')
+
+        return context
 
 class TrainModelListView(ListView):
     model = TrainModel
@@ -34,6 +62,23 @@ class TrainModelListView(ListView):
     context_object_name = 'train_models'
     paginate_by = 2
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        search_value = self.request.GET.get("search")
+
+        if search_value:
+            queryset = queryset.filter(name__icontains=search_value)
+            return queryset
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        context['search_value'] = self.request.GET.get('search', '')
+        return context
 
 class TrainModelCreate(LoginRequiredMixin, CreateView):
     model = TrainModel
@@ -97,6 +142,24 @@ class ArchitectureListView(ListView):
     template_name = "architecture_list.html"
     context_object_name = "architectures"
 
+    def get_queryset(self):
+
+        queryset = super().get_queryset()
+
+        search_value = self.request.GET.get("search")
+
+        if search_value:
+            queryset = queryset.filter(name__icontains=search_value)
+            return queryset
+        return queryset
+
+    def get_context_data(
+        self, *, object_list = ..., **kwargs
+    ):
+
+        context = super().get_context_data()
+        context["search_value"] = self.request.GET.get("search", '')
+        return context
 
 class ArchitectureDetailView(DetailView):
     model = Architecture
