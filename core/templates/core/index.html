@@ -1,10 +1,72 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Main Page</h1>
-  <h2>Researchers: {{ total_researchers }}</h2>
-  <h2>Tags: {{ tags }}</h2>
-  <h2>Architectures: {{ architectures }}</h2>
-  <h2>Train models: {{ train_models }}</h2>
-  <h2>Metrics: {{ performance_metric }}</h2>
+<div class="mb-4">
+    <h1 class="fw-bold text-dark">Witaj, {{ request.user|default:"Gościu" }}! 👋</h1>
+    <p class="text-muted fs-5">Oto podsumowanie Twojej bazy danych. (Odwiedziłeś tę stronę {{ num_visits }} razy).</p>
+</div>
+
+<div class="row g-4 mb-5">
+
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-primary text-white h-100">
+            <div class="card-body">
+                <h6 class="text-uppercase fw-bold mb-2 opacity-75">Badacze</h6>
+                <h2 class="display-5 fw-bold mb-0">{{ total_researchers }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-success text-white h-100">
+            <div class="card-body">
+                <h6 class="text-uppercase fw-bold mb-2 opacity-75">Modele AI</h6>
+                <h2 class="display-5 fw-bold mb-0">{{ train_models }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-info text-white h-100">
+            <div class="card-body">
+                <h6 class="text-uppercase fw-bold mb-2 opacity-75">Architektury</h6>
+                <h2 class="display-5 fw-bold mb-0">{{ architectures }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-dark text-white h-100">
+            <div class="card-body">
+                <h6 class="text-uppercase fw-bold mb-2 opacity-75">Tagi / Metryki</h6>
+                <h2 class="display-5 fw-bold mb-0">{{ tags }} / {{ performance_metric }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0">Ostatnio dodane modele</h4>
+            <a href="{% url 'core:train_model-create' %}" class="btn btn-primary shadow-sm">+ Dodaj Model</a>
+        </div>
+
+        <ul class="list-group list-group-flush">
+            {% for model in last_added_models %}
+                <li class="list-group-item px-0 py-3 d-flex justify-content-between align-items-center">
+                    <span class="fs-5 fw-medium">{{ model }}</span>
+                    <a href="{% url 'core:train-model-detail' model.pk %}" class="btn btn-sm btn-outline-secondary">Zobacz szczegóły</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item px-0 py-4 text-center text-muted">
+                    Brak dodanych modeli. Czas dodać pierwszy!
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>
 {% endblock %}
