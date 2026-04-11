@@ -60,7 +60,7 @@ class TrainModelListView(ListView):
     model = TrainModel
     template_name = 'core/train_model_list.html'
     context_object_name = 'train_models'
-    paginate_by = 2
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()

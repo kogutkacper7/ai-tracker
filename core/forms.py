@@ -1,5 +1,7 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.forms.widgets import Textarea
+from .models import Researcher
 
 from .models import PerformanceMetric
 
@@ -13,4 +15,10 @@ class ContactUsForm(forms.Form):
     subject = forms.CharField(max_length=30)
     email = forms.EmailField()
     content = forms.CharField(max_length=255)
+
+
+class ResearcherCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = Researcher
+        fields = UserCreationForm.Meta.fields + ("specialization",)
 
