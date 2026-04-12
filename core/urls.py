@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import ResearcherListView, index_view, TrainModelListView, TrainModelDetailView, ResearcherDetailView, \
     ArchitectureDetailView, TrainModelCreate, ArchitectureListView, contact_view, \
-    TrainModelUpdate, TrainModelDelete, PerformanceMetricUpdate, PerformanceMetricDelete, RegisterUser
+    TrainModelUpdate, TrainModelDelete, PerformanceMetricUpdate, PerformanceMetricDelete, RegisterUser, \
+    PerformanceMetricCreate
 from django.conf.urls import include
 
 app_name = "core"
@@ -20,6 +21,7 @@ urlpatterns = [
     path("archtecture-detail/<int:pk>", ArchitectureDetailView.as_view(), name="architecture-detail"),
     path("architecture-list", ArchitectureListView.as_view(), name="architecture-list"),
     path("contact-us/", contact_view, name="contact-us"),
-    path("train-model/metric/update/<int:pk>", PerformanceMetricUpdate.as_view(), name="metric-update"),
+    path("train-model/metric/create/", PerformanceMetricCreate.as_view(), name="metric-create"),
+    path("train-model/metric/update/<int:pk>/", PerformanceMetricUpdate.as_view(), name="metric-update"),
     path("train-model/metric/delete/<int:pk>/", PerformanceMetricDelete.as_view(), name="metric-delete")
 ]

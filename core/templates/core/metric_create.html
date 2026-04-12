@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Create new metric for {{ object.train_model.name }}</h1>
+
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add new metric</button>
+    {% if train_model %}
+      <a href="{% url 'core:train-model-detail' train_model.pk%}">Cancel</a>
+    {% else %}
+        <a href="{% url 'core:train-model-list' %}" class="btn btn-secondary">Cancel</a>
+    {% endif %}
+  </form>
+{% endblock %}

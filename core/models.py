@@ -19,8 +19,8 @@ class Tag(models.Model):
 
 class Architecture(models.Model):
     name = models.CharField(max_length=255, verbose_name="Name")
-    description = models.TextField(max_length=255, verbose_name="Description")
-    config = models.JSONField(blank=True, null=True, verbose_name="Konfiguracja JSON")
+    description = models.CharField(max_length=255, verbose_name="Description")
+    config = models.JSONField(blank=True, null=True, verbose_name="JSON Configuration")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
 
     def __str__(self):

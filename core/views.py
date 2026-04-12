@@ -1,8 +1,10 @@
+import datetime
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.template.context_processors import request
 from django.urls import reverse_lazy
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from .models import Researcher, TrainModel, Architecture, PerformanceMetric, Tag
 from .forms import PerformanceMetricForm, ContactUsForm, ResearcherCreationForm
@@ -123,6 +125,7 @@ class TrainModelDetailView(DetailView):
 class TrainModelDelete(LoginRequiredMixin, DeleteView):
     model = TrainModel
     success_url = reverse_lazy("core:train_model-list")
+    context_object_name = "train_model"
 
 
 class TrainModelUpdate(LoginRequiredMixin, UpdateView):
@@ -190,6 +193,40 @@ def contact_view(request):
     context = {"form": form}
     return render(request, "core/contact.html", context)
 
+
+class PerformanceMetricCreate(LoginRequiredMixin, CreateView):
+    model = PerformanceMetric
+    form_class = PerformanceMetricForm
+    template_name = "core/metric_create.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        model_id = self.request.GET.get("train_model")
+
+        if model_id:
+            context["train_model"] = get_object_or_404(TrainModel, pk=model_id)
+            return context
+
+        return context
+
+    def get_initial(self):
+        initial = super().get_initial()
+        model_id = self.request.GET.get("train_model")
+
+        if model_id:
+            initial["trained_model"] = model_id
+
+            return initial
+        return initial
+
+    def form_valid(self, form):
+        model_id = self.request.GET.get('train_model')
+        if model_id:
+            form.instance.trained_model_id = model_id
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return  reverse_lazy('core:train-model-detail', kwargs={"pk": self.object.trained_model.pk })
 
 class PerformanceMetricUpdate(LoginRequiredMixin, UpdateView):
     model = PerformanceMetric
