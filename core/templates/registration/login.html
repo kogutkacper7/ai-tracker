@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Naprawa wystających pól formularza */
+    form p input {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+</style>
+<div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-md-4">
+        <div class="card shadow border-0">
+            <div class="card-body p-5">
+                <h2 class="text-center mb-4">Logowanie</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Zaloguj się</button>
+                </form>
+                <div class="text-center mt-3">
+                    <small>Nie masz konta? <a href="{% url 'core:login' %}">Zarejestruj się</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

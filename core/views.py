@@ -200,10 +200,12 @@ class PerformanceMetricUpdate(LoginRequiredMixin, UpdateView):
 
 class PerformanceMetricDelete(LoginRequiredMixin, DeleteView):
     model = PerformanceMetric
+    context_object_name = "metric"
 
     def get_success_url(self):
         pk = self.object.trained_model.pk
         return reverse_lazy('core:train-model-detail', kwargs={"pk":pk})
+
 
 
 class RegisterUser(CreateView):

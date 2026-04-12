@@ -1,40 +1,41 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %} {% block content %}
 <div class="row justify-content-center">
-    <div class="col-lg-7">
+  <div class="col-lg-7">
 
-        <a href="{% url 'core:train_model-list' %}" class="btn btn-link text-decoration-none text-muted mb-3 p-0">
-            ← Cancel and go back
-        </a>
+    <a href="{% url 'core:train_model-list' %}" class="btn btn-link text-decoration-none text-muted mb-3 p-0">
+      ← Cancel and go back
+    </a>
 
-        <div class="card shadow-lg border-0">
-            <div class="card-header bg-primary text-white p-4">
-                <h3 class="fw-bold mb-0">🚀 Add New AI Model</h3>
-                <p class="mb-0 opacity-75">Register a new model in the tracker database</p>
-            </div>
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-primary text-white p-4">
+        <h3 class="fw-bold mb-0">🚀 Add New AI Model</h3>
+        <p class="mb-0 opacity-75">Register a new model in the tracker database</p>
+      </div>
 
-            <div class="card-body p-4">
-                <form method="post" class="needs-validation">
-                    {% csrf_token %}
+      <div class="card-body p-4">
+        <form method="post" class="needs-validation">
+          {% csrf_token %}
 
-                    {{ form|crispy }}
+          {{ form|crispy }}
 
-                    {# {{ form.as_p }} #}
+          {# {{ form.as_p }} #}
 
-                    <div class="d-grid gap-2 mt-4">
-                        <button type="submit" class="btn btn-primary btn-lg shadow-sm">
-                            Save Model to Database
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="mt-4 p-3 bg-light rounded border text-muted small">
-            <i class="fas fa-info-circle me-2"></i>
-            Make sure you have assigned the correct <strong>Architecture</strong> and <strong>Researcher</strong> before saving.
-        </div>
-
+          <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+              Save Model to Database
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+
+    <div class="mt-4 p-3 bg-light rounded border text-muted small">
+      <i class="fas fa-info-circle me-2"></i>
+      Make sure you have assigned the correct <strong>Architecture</strong> and <strong>Researcher</strong> before
+      saving.
+    </div>
+
+  </div>
 </div>
 {% endblock %}

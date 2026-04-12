@@ -3,20 +3,20 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-lg-5"> <a href="{% url 'core:train-model-detail' train_model.pk %}" class="btn btn-link text-decoration-none text-muted mb-3 p-0">
-            ← Back to {{ train_model.name }}
+    <div class="col-lg-5"> <a href="{% url 'core:train-model-detail' metric.trained_model.pk %}" class="btn btn-link text-decoration-none text-muted mb-3 p-0">
+            ← Back to {{ metric.trained_model.name }}
         </a>
 
         <div class="card shadow-lg border-0">
             <div class="card-header bg-success text-white p-4">
                 <h4 class="fw-bold mb-0">📈 Update Metrics</h4>
-                <p class="mb-0 small opacity-75">Update performance results for: <strong>{{ train_model.name }}</strong></p>
+                <p class="mb-0 small opacity-75">Update performance results for: <strong>{{ metric.train_model.name }}</strong></p>
             </div>
-            
+
             <div class="card-body p-4">
                 <form method="post">
                     {% csrf_token %}
-                    
+
                     <div class="mb-3">
                         {{ form|crispy }}
                     </div>
