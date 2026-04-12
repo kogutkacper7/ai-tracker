@@ -87,7 +87,7 @@ class TrainModelCreate(LoginRequiredMixin, CreateView):
     template_name = 'core/train_model_create.html'
     fields = ["name", "version", "architecture", "author", "tags"]
 
-    success_url = reverse_lazy("core:train_model-list")
+    success_url = reverse_lazy("core:train-model-list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -124,7 +124,7 @@ class TrainModelDetailView(DetailView):
 
 class TrainModelDelete(LoginRequiredMixin, DeleteView):
     model = TrainModel
-    success_url = reverse_lazy("core:train_model-list")
+    success_url = reverse_lazy("core:train-model-list")
     context_object_name = "train_model"
 
 
