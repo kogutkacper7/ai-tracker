@@ -8,16 +8,16 @@
             <div class="card-body p-5">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="fw-bold text-primary mb-0">Baza Modeli AI</h2>
+                    <h2 class="fw-bold text-primary mb-0">AI Model Database</h2>
                     <a href="{% url 'core:train-model-create' %}" class="btn btn-primary btn-lg px-4 shadow-sm">
-                        + Dodaj nowy model
+                        + Add new model
                     </a>
                 </div>
 
                 <div class="bg-light p-4 rounded-3 mb-4 border">
                     <form action="" method="get" class="d-flex gap-3">
-                        <input type="text" class="form-control form-control-lg" value="{{ search_value }}" placeholder="Wpisz nazwę modelu..." name="search">
-                        <button type="submit" class="btn btn-dark btn-lg px-5">Szukaj</button>
+                        <input type="text" class="form-control form-control-lg" value="{{ search_value }}" placeholder="Search by model name..." name="search">
+                        <button type="submit" class="btn btn-dark btn-lg px-5">Search</button>
                     </form>
                 </div>
 
@@ -25,8 +25,8 @@
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th>Nazwa Modelu</th>
-                                <th class="text-end">Akcje</th>
+                                <th>Model Name</th>
+                                <th class="text-end">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,13 +34,13 @@
                                 <tr>
                                     <td class="fw-medium fs-5 py-3">{{ train_model.name }}</td>
                                     <td class="text-end">
-                                        <a href="{% url 'core:train-model-detail' train_model.pk %}" class="btn btn-outline-secondary btn-sm px-3">Szczegóły</a>
+                                        <a href="{% url 'core:train-model-detail' train_model.pk %}" class="btn btn-outline-secondary btn-sm px-3">Details</a>
                                     </td>
                                 </tr>
                             {% empty %}
                                 <tr>
                                     <td colspan="2" class="text-center py-5 text-muted">
-                                        <span class="fs-5">Nie znaleziono modeli dla hasła: <strong>"{{ search_value }}"</strong></span>
+                                        <span class="fs-5">No models found for: <strong>"{{ search_value }}"</strong></span>
                                     </td>
                                 </tr>
                             {% endfor %}

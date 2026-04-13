@@ -1,16 +1,48 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-  <h1>Create new metric for {{ object.train_model.name }}</h1>
+<div class="row justify-content-center">
+    <div class="col-lg-5">
+        {% if train_model %}
+            <a href="{% url 'core:train-model-detail' train_model.pk %}" class="btn btn-link text-decoration-none text-muted mb-3 p-0">
+                ← Back to {{ train_model.name }}
+            </a>
+        {% else %}
+            <a href="{% url 'core:train-model-list' %}" class="btn btn-link text-decoration-none text-muted mb-3 p-0">
+                ← Back to model list
+            </a>
+        {% endif %}
 
-  <form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add new metric</button>
-    {% if train_model %}
-      <a href="{% url 'core:train-model-detail' train_model.pk%}">Cancel</a>
-    {% else %}
-        <a href="{% url 'core:train-model-list' %}" class="btn btn-secondary">Cancel</a>
-    {% endif %}
-  </form>
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-success text-white p-4">
+                <h4 class="fw-bold mb-0">📈 Add New Metric</h4>
+                {% if train_model %}
+                    <p class="mb-0 small opacity-75">Adding performance results for: <strong>{{ train_model.name }}</strong></p>
+                {% endif %}
+            </div>
+
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form|crispy }}
+                    </div>
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-success btn-lg shadow-sm">
+                            Save Metric
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="alert alert-info mt-4 border-0 shadow-sm" style="border-radius: 12px;">
+            <small>
+                <strong>Tip:</strong> Use standard notation for metrics (e.g., 0.95 or 95%). These values will be automatically displayed on the model's detail page.
+            </small>
+        </div>
+
+    </div>
+</div>
 {% endblock %}

@@ -1,14 +1,10 @@
-import datetime
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
-from django.template.context_processors import request
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from .models import Researcher, TrainModel, Architecture, PerformanceMetric, Tag
 from .forms import PerformanceMetricForm, ContactUsForm, ResearcherCreationForm
-
 
 def index_view(request):
     researchers = Researcher.objects.all().count()
@@ -49,9 +45,7 @@ class ResearcherListView(ListView):
 
         return queryset
 
-    def get_context_data(
-        self, *, object_list = ..., **kwargs
-    ):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context["search_value"] = self.request.GET.get('search', '')
@@ -65,13 +59,12 @@ class TrainModelListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = TrainModel.objects.select_related("architecture", "author").prefetch_related("tags")
 
         search_value = self.request.GET.get("search")
 
         if search_value:
             queryset = queryset.filter(name__icontains=search_value)
-            return queryset
 
         return queryset
 
@@ -85,7 +78,7 @@ class TrainModelListView(ListView):
 class TrainModelCreate(LoginRequiredMixin, CreateView):
     model = TrainModel
     template_name = 'core/train_model_create.html'
-    fields = ["name", "version", "architecture", "author", "tags"]
+    fields = ["name", "version", "architecture", "tags"]
 
     success_url = reverse_lazy("core:train-model-list")
 
@@ -93,6 +86,10 @@ class TrainModelCreate(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context["train_models"] = TrainModel.objects.all()
         return context
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 class TrainModelDetailView(DetailView):
@@ -121,6 +118,13 @@ class TrainModelDetailView(DetailView):
         context["form"] = form
         return self.render_to_response(context)
 
+    def get_object(self, queryset=None):
+        return (
+            TrainModel.objects
+            .prefetch_related("performance_metrics")
+            .get(pk=self.kwargs["pk"])
+        )
+
 
 class TrainModelDelete(LoginRequiredMixin, DeleteView):
     model = TrainModel
@@ -142,7 +146,7 @@ class ResearcherDetailView(DetailView):
 
 class ArchitectureListView(ListView):
     model = Architecture
-    template_name = "architecture_list.html"
+    template_name = "core/architecture_list.html"
     context_object_name = "architectures"
 
     def get_queryset(self):
@@ -156,9 +160,7 @@ class ArchitectureListView(ListView):
             return queryset
         return queryset
 
-    def get_context_data(
-        self, *, object_list = ..., **kwargs
-    ):
+    def get_context_data(self, **kwargs):
 
         context = super().get_context_data()
         context["search_value"] = self.request.GET.get("search", '')
@@ -230,7 +232,7 @@ class PerformanceMetricCreate(LoginRequiredMixin, CreateView):
 
 class PerformanceMetricUpdate(LoginRequiredMixin, UpdateView):
     model = PerformanceMetric
-    fields = "__all__"
+    fields = ["accuracy_score", "loss_value"]
     template_name = "core/metric_update.html"
     context_object_name = "metric"
 

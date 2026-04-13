@@ -13,7 +13,6 @@
 
                 <div class="bg-light p-3 rounded-3 mb-4 border">
                     <form action="" method="get" class="d-flex gap-3">
-                        {% csrf_token %}
                         <input type="text" class="form-control form-control-lg" name="search" placeholder="Search for architectures (e.g. Transformer, CNN)..." value="{{ search_value|default_if_none:'' }}">
                         <button type="submit" class="btn btn-dark btn-lg px-4">Search</button>
                     </form>
@@ -37,7 +36,7 @@
                     {% empty %}
                         <div class="text-center py-5 text-muted">
                             <div class="fs-1 mb-3">📂</div>
-                            <p class="mb-0 fs-5">Nie znaleziono architektur dla hasła: <strong>"{{ search_value }}"</strong></p>
+                            <p class="mb-0 fs-5">No architectures found for: <strong>"{{ search_value }}"</strong></p>
                             <a href="?" class="text-decoration-none mt-2 d-inline-block">Wyczyść wyszukiwanie</a>
                         </div>
                     {% endfor %}
