@@ -33,6 +33,7 @@ class ResearcherListView(ListView):
     model = Researcher
     template_name = 'core/researcher_list.html'
     context_object_name = "researchers"
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -148,6 +149,7 @@ class ArchitectureListView(ListView):
     model = Architecture
     template_name = "core/architecture_list.html"
     context_object_name = "architectures"
+    paginate_by = 5
 
     def get_queryset(self):
 
@@ -157,7 +159,6 @@ class ArchitectureListView(ListView):
 
         if search_value:
             queryset = queryset.filter(name__icontains=search_value)
-            return queryset
         return queryset
 
     def get_context_data(self, **kwargs):
