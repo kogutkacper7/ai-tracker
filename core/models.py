@@ -33,6 +33,9 @@ class TrainModel(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="train_models")
     tags = models.ManyToManyField(Tag)
 
+    class Meta:
+        ordering = ["id"]
+
     def __str__(self):
         return f"Train model name: {self.name}"
 
