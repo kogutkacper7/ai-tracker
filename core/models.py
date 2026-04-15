@@ -29,7 +29,7 @@ class Architecture(models.Model):
 class TrainModel(models.Model):
     name = models.CharField(max_length=255, unique=True)
     version = models.CharField(max_length=255)
-    architecture = models.ForeignKey(Architecture, on_delete=models.CASCADE)
+    architecture = models.ForeignKey(Architecture, on_delete=models.CASCADE, related_name="train_models")
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="train_models")
     tags = models.ManyToManyField(Tag)
 
