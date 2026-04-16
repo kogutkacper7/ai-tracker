@@ -1,9 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 from .views import ResearcherListView, index_view, TrainModelListView, TrainModelDetailView, ResearcherDetailView, \
     ArchitectureDetailView, TrainModelCreate, ArchitectureListView, contact_view, \
     TrainModelUpdate, TrainModelDelete, PerformanceMetricUpdate, PerformanceMetricDelete, RegisterUser, \
     PerformanceMetricCreate
-from django.conf.urls import include
+
 
 app_name = "core"
 
