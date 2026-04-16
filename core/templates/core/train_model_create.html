@@ -16,11 +16,7 @@
       <div class="card-body p-4">
         <form method="post" class="needs-validation">
           {% csrf_token %}
-
           {{ form|crispy }}
-
-          {# {{ form.as_p }} #}
-
           <div class="d-grid gap-2 mt-4">
             <button type="submit" class="btn btn-primary btn-lg shadow-sm">
               Save Model to Database

@@ -13,7 +13,6 @@
 
                 <div class="bg-light p-3 rounded-3 mb-4 border">
                     <form action="" method="get" class="d-flex gap-3">
-                        {% csrf_token %}
                         <input type="text" class="form-control form-control-lg" name="search" placeholder="Search for a researcher..." value="{{ search_value|default_if_none:'' }}">
                         <button type="submit" class="btn btn-dark btn-lg px-4">Search</button>
                     </form>
