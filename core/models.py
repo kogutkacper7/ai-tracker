@@ -17,6 +17,7 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+
 class Architecture(models.Model):
     name = models.CharField(max_length=255, verbose_name="Name")
     description = models.CharField(max_length=255, verbose_name="Description")
@@ -25,6 +26,7 @@ class Architecture(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class TrainModel(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -41,6 +43,7 @@ class TrainModel(models.Model):
 
     def get_absolute_url(self):
         return reverse("core:train-model-detail", kwargs={"pk": self.pk})
+
 
 class PerformanceMetric(models.Model):
     trained_model = models.ForeignKey(TrainModel, on_delete=models.CASCADE, related_name="performance_metrics")

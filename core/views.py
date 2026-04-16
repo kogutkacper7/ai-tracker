@@ -208,7 +208,6 @@ class PerformanceMetricCreate(LoginRequiredMixin, CreateView):
 
         if model_id:
             context["train_model"] = get_object_or_404(TrainModel, pk=model_id)
-            return context
 
         return context
 
@@ -219,7 +218,6 @@ class PerformanceMetricCreate(LoginRequiredMixin, CreateView):
         if model_id:
             initial["trained_model"] = model_id
 
-            return initial
         return initial
 
     def form_valid(self, form):
