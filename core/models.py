@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 
 
 class Researcher(AbstractUser):
@@ -32,7 +32,7 @@ class TrainModel(models.Model):
     name = models.CharField(max_length=255, unique=True)
     version = models.CharField(max_length=255)
     architecture = models.ForeignKey(Architecture, on_delete=models.CASCADE, related_name="train_models")
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="train_models")
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="authored_models")
     tags = models.ManyToManyField(Tag)
 
     class Meta:

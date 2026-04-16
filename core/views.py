@@ -149,7 +149,7 @@ class ResearcherDetailView(DetailView):
     def get_object(self, queryset=None):
         return (
             Researcher.objects
-            .prefetch_related("train_models__architecture")
+            .prefetch_related("authored_models__architecture")
             .get(pk=self.kwargs["pk"])
         )
 

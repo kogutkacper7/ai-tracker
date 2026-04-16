@@ -52,7 +52,7 @@ class TrainModelTest(TestCase):
             )
 
     def test_train_model_multiple_tags(self):
-        tag_2 = Tag.objects.create(name="Test_tag_name_2)")
+        tag_2 = Tag.objects.create(name="Test_tag_name_2")
         self.train_model_2.tags.add(tag_2)
 
         self.assertEqual(self.train_model_2.tags.count(), 2)
