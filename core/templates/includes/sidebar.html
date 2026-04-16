@@ -22,6 +22,12 @@
                 🏗️ <span class="ms-2">Architecture</span>
             </a>
         </li>
+
+        <li>
+            <a href="{% url 'core:contact-us' %}" class="nav-link {% if 'architecture' in request.path %}active text-white{% else %}text-dark{% endif %} p-2">
+                🏗️ <span class="ms-2">Contact</span>
+            </a>
+        </li>
     </ul>
 
     <div class="mt-auto border-top pt-3">

@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.forms.widgets import Textarea
 from .models import Researcher
 
 from .models import PerformanceMetric
