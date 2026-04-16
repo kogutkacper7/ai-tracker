@@ -1,12 +1,8 @@
-from os import name
-from platform import version, architecture
-
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.test import TestCase
 from django.urls import reverse
-
-from ..models import TrainModel, Architecture, PerformanceMetric, Tag
+from core.models import TrainModel, Architecture, PerformanceMetric, Tag
 
 
 class TrainModelTest(TestCase):

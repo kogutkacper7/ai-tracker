@@ -76,6 +76,7 @@ class TrainModelListView(ListView):
         context['search_value'] = self.request.GET.get('search', '')
         return context
 
+
 class TrainModelCreate(LoginRequiredMixin, CreateView):
     model = TrainModel
     template_name = 'core/train_model_create.html'
@@ -145,6 +146,13 @@ class ResearcherDetailView(DetailView):
     template_name = "core/researcher_detail.html"
     context_object_name = "researcher"
 
+    def get_object(self, queryset=None):
+        return (
+            Researcher.objects
+            .prefetch_related("train_models__architecture")
+            .get(pk=self.kwargs["pk"])
+        )
+
 class ArchitectureListView(ListView):
     model = Architecture
     template_name = "core/architecture_list.html"
@@ -172,7 +180,12 @@ class ArchitectureDetailView(DetailView):
     template_name = "core/architecture_detail.html"
     context_object_name = "architecture"
 
-
+    def get_object(self, queryset=None):
+        return (
+            Architecture.objects
+            .prefetch_related("train_models__author")
+            .get(pk=self.kwargs["pk"])
+        )
 
 def contact_view(request):
     if request.method == "POST":
