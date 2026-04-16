@@ -7,23 +7,19 @@ from core.models import TrainModel, Architecture, PerformanceMetric, Tag
 
 class TrainModelTest(TestCase):
 
-
     def setUp(self):
         self.data_setup = [(f"test_name_{i}", f"version_{i}") for i in range(0, 3)]
         self.author = get_user_model().objects.create_user(
             username="Test_Researcher",
             password="Test_password",
-            specialization="test_specialization_name"
+            specialization="test_specialization_name",
         )
         self.architecture = Architecture.objects.create(
             name="test_architecture",
             description="test_description",
         )
 
-        self.tag = Tag.objects.create(
-            name="Test_tag_name"
-        )
-
+        self.tag = Tag.objects.create(name="Test_tag_name")
 
         for ind, data in enumerate(self.data_setup):
             train_model = TrainModel.objects.create(
@@ -35,12 +31,14 @@ class TrainModelTest(TestCase):
             train_model.tags.add(self.tag)
             setattr(self, f"train_model_{ind}", train_model)
 
-
     def test_train_model_str(self):
         self.assertEqual(str(self.train_model_0), "Train model name: test_name_0")
 
     def test_train_model_get_absolute_url(self):
-        self.assertEqual(self.train_model_1.get_absolute_url(), reverse("core:train-model-detail", kwargs={"pk":self.train_model_1.pk}))
+        self.assertEqual(
+            self.train_model_1.get_absolute_url(),
+            reverse("core:train-model-detail", kwargs={"pk": self.train_model_1.pk}),
+        )
 
     def test_unique_train_model(self):
         with self.assertRaises(IntegrityError):
@@ -70,8 +68,7 @@ class TagTest(TestCase):
 class ArchitectureTest(TestCase):
     def setUp(self):
         self.architecture = Architecture.objects.create(
-            name="test_name",
-            description="test_description"
+            name="test_name", description="test_description"
         )
 
     def test_architecture_str(self):
@@ -83,7 +80,7 @@ class PerformanceMetricTest(TestCase):
         self.author = get_user_model().objects.create_user(
             username="Test_Researcher_2",
             password="Test_password",
-            specialization="AI Research"
+            specialization="AI Research",
         )
 
         self.architecture = Architecture.objects.create(
@@ -95,19 +92,11 @@ class PerformanceMetricTest(TestCase):
             name="test_train_model_name",
             version="1.1",
             architecture=self.architecture,
-            author = self.author
+            author=self.author,
         )
         self.metric = PerformanceMetric.objects.create(
-            trained_model = self.train_model,
-            accuracy_score=2.2,
-            loss_value=0.95
+            trained_model=self.train_model, accuracy_score=2.2, loss_value=0.95
         )
 
     def test_metric_str(self):
-        self.assertEqual(
-            str(self.metric),
-            "Name test_train_model_name. Accuracy: 2.2."
-        )
-
-
-
+        self.assertEqual(str(self.metric), "Name test_train_model_name. Accuracy: 2.2.")

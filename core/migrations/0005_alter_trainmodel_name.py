@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0004_alter_architecture_config_and_more'),
+        ("core", "0004_alter_architecture_config_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='trainmodel',
-            name='name',
+            model_name="trainmodel",
+            name="name",
             field=models.CharField(max_length=255, unique=True),
         ),
     ]

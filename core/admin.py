@@ -4,10 +4,15 @@ from .models import Researcher, Architecture, TrainModel, PerformanceMetric, Tag
 
 
 class ResearcherAdmin(UserAdmin):
-    fieldsets = UserAdmin.fieldsets + (('Additional information', {
-        'fields':('specialization',),
-    }),
+    fieldsets = UserAdmin.fieldsets + (
+        (
+            "Additional information",
+            {
+                "fields": ("specialization",),
+            },
+        ),
     )
+
 
 admin.site.register(Researcher, ResearcherAdmin)
 admin.site.register(Architecture)

@@ -4,6 +4,7 @@ from .models import Researcher
 
 from .models import PerformanceMetric
 
+
 class PerformanceMetricForm(forms.ModelForm):
     class Meta:
         model = PerformanceMetric
@@ -20,4 +21,3 @@ class ResearcherCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Researcher
         fields = UserCreationForm.Meta.fields + ("specialization",)
-

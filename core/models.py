@@ -31,8 +31,14 @@ class Architecture(models.Model):
 class TrainModel(models.Model):
     name = models.CharField(max_length=255, unique=True)
     version = models.CharField(max_length=255)
-    architecture = models.ForeignKey(Architecture, on_delete=models.CASCADE, related_name="train_models")
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="authored_models")
+    architecture = models.ForeignKey(
+        Architecture, on_delete=models.CASCADE, related_name="train_models"
+    )
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="authored_models",
+    )
     tags = models.ManyToManyField(Tag)
 
     class Meta:
@@ -46,7 +52,9 @@ class TrainModel(models.Model):
 
 
 class PerformanceMetric(models.Model):
-    trained_model = models.ForeignKey(TrainModel, on_delete=models.CASCADE, related_name="performance_metrics")
+    trained_model = models.ForeignKey(
+        TrainModel, on_delete=models.CASCADE, related_name="performance_metrics"
+    )
     accuracy_score = models.FloatField()
     loss_value = models.FloatField()
     test_date = models.DateTimeField(auto_now_add=True)
@@ -55,4 +63,4 @@ class PerformanceMetric(models.Model):
         return f"Name {self.trained_model.name}. Accuracy: {self.accuracy_score}."
 
     def get_absolute_url(self):
-        return reverse("core:train-model-detail", kwargs={"pk":self.trained_model.pk})
+        return reverse("core:train-model-detail", kwargs={"pk": self.trained_model.pk})

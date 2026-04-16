@@ -7,13 +7,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0005_alter_trainmodel_name'),
+        ("core", "0005_alter_trainmodel_name"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='trainmodel',
-            name='architecture',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='train_models', to='core.architecture'),
+            model_name="trainmodel",
+            name="architecture",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="train_models",
+                to="core.architecture",
+            ),
         ),
     ]

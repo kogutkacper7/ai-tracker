@@ -8,18 +8,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0002_tag_alter_trainmodel_version_trainmodel_tags'),
+        ("core", "0002_tag_alter_trainmodel_version_trainmodel_tags"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='performancemetric',
-            name='trained_model',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='performance_metrics', to='core.trainmodel'),
+            model_name="performancemetric",
+            name="trained_model",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="performance_metrics",
+                to="core.trainmodel",
+            ),
         ),
         migrations.AlterField(
-            model_name='trainmodel',
-            name='author',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='train_models', to=settings.AUTH_USER_MODEL),
+            model_name="trainmodel",
+            name="author",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="train_models",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

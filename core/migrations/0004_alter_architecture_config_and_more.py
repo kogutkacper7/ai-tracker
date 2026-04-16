@@ -6,18 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0003_alter_performancemetric_trained_model_and_more'),
+        ("core", "0003_alter_performancemetric_trained_model_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='architecture',
-            name='config',
-            field=models.JSONField(blank=True, null=True, verbose_name='JSON Configuration'),
+            model_name="architecture",
+            name="config",
+            field=models.JSONField(
+                blank=True, null=True, verbose_name="JSON Configuration"
+            ),
         ),
         migrations.AlterField(
-            model_name='architecture',
-            name='description',
-            field=models.CharField(max_length=255, verbose_name='Description'),
+            model_name="architecture",
+            name="description",
+            field=models.CharField(max_length=255, verbose_name="Description"),
         ),
     ]
