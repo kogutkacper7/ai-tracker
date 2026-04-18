@@ -1,27 +1,30 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card shadow-sm border-0">
-                <div class="card-body p-5">
-                    <h2 class="fw-bold text-center mb-4 text-dark">Contact Us</h2>
-                    <p class="text-muted text-center mb-4">Have a question? Drop us a message!</p>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-5">
 
-                    <form action="" method="post">
+            <div class="card shadow border-0 rounded-3">
+                <div class="card-body p-4 p-md-5 text-center">
+
+                    <h2 class="fw-bold mb-3">Contact Us</h2>
+                    <p class="text-muted mb-4">Have a question? Drop us a message!</p>
+
+                    <form method="post" novalidate class="text-start">
                         {% csrf_token %}
 
-                        <div class="form-group mb-4">
-                            {{ form.as_p }}
-                        </div>
+                        {{ form|crispy }}
 
-                        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill shadow-sm">
+                        <button type="submit" class="btn btn-primary w-100 btn-lg mt-4 shadow-sm">
                             Send Message
                         </button>
                     </form>
+
                 </div>
             </div>
+
         </div>
     </div>
 </div>
