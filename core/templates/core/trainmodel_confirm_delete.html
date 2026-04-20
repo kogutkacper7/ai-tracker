@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card shadow border-danger">
+
+                <div class="card-header bg-danger text-white text-center py-3">
+                    <h4 class="mb-0">
+                        ⚠️ Confirm Deletion
+                    </h4>
+                </div>
+
+                <div class="card-body p-4 text-center">
+                    <h5 class="card-title text-dark mb-4">
+                        Are you sure you want to delete the train model: <br>
+                        <strong class="text-danger fs-4">"{{ train_model.name }}"</strong>?
+                    </h5>
+
+                    <p class="text-muted mb-5">
+                        This action cannot be undone. All data and metrics associated with this model will be permanently removed from the system.
+                    </p>
+
+                    <form action="" method="post" class="d-flex justify-content-center gap-3">
+                        {% csrf_token %}
+
+                        <a href="{% url 'core:train-model-detail' train_model.pk %}" class="btn btn-outline-secondary btn-lg px-4">
+                            Cancel
+                        </a>
+
+                        <button type="submit" class="btn btn-danger btn-lg px-4 shadow-sm">
+                            Yes, Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

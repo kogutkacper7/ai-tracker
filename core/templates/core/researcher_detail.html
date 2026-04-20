@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+
+        <a href="{% url 'core:researcher-list' %}" class="btn btn-link text-decoration-none text-muted mb-3 p-0">
+            ← Back to Researchers
+        </a>
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4 d-flex align-items-center gap-4">
+                <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center shadow-sm" style="width: 80px; height: 80px; font-weight: bold; font-size: 2rem;">
+                    {{ researcher.username|make_list|first|upper }}
+                </div>
+                <div>
+                    <h2 class="fw-bold mb-1">{{ researcher.username }}</h2>
+                    <p class="text-muted mb-0">{{ researcher.specialization}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white border-bottom p-4">
+                <h4 class="fw-bold mb-0 text-dark">Assigned AI Models</h4>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="px-4">Model Name</th>
+                                <th>Architecture</th>
+                                <th class="text-end px-4">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for model in researcher.authored_models.all %}
+                                <tr>
+                                    <td class="px-4 fw-bold text-primary">{{ model.name }}</td>
+                                    <td>{{ model.architecture.name|default:"-" }}</td>
+                                    <td class="text-end px-4">
+                                        <a href="{% url 'core:train-model-detail' model.pk %}" class="btn btn-sm btn-outline-secondary">View Details</a>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center py-5 text-muted">
+                                        This researcher hasn't added any models yet.
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
